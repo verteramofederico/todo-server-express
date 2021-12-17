@@ -12,13 +12,19 @@ module.exports = {
 
         const task = await Task.findOne({ where: { id }})
     
-        if (!task) {return res.status(404).send({message: 'there is not task'})}
+        if (!task) {return res.status(404).send({message: 'there is no task'})}
 
         return res.status(200).json(task)
     },
     async showAll (req, res) {
         const task = await Task.findAll()
-    
+        if (!task) {return res.status(404).send({message: 'there is not task'})}
+
+        return res.status(200).json(task)
+    },
+    async showUserTasks (req, res) {
+        let user_id = req.userId
+        const task = await Task.findAll({where: { user_id: user_id}})
         if (!task) {return res.status(404).send({message: 'there is not task'})}
 
         return res.status(200).json(task)
