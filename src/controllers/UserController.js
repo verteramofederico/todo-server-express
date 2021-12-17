@@ -58,7 +58,7 @@ module.exports = {
             { expiresIn: 86400 },
             (error, token) => {
                 if (error) {throw error};
-                return res.status(201).json({ token });
+                return res.status(201).json({ token, name: user.name });
             }
         )
     },
@@ -85,7 +85,7 @@ module.exports = {
             { expiresIn: 86400 },
             (error, token) => {
                 if (error) throw error;
-                return res.status(201).json({ token });
+                return res.status(201).json({ token, name: user.name });
             }
         )
     }
