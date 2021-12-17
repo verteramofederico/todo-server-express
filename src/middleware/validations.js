@@ -9,6 +9,10 @@ const Validations = {
   createTask: [
     check("user_id", "You must be logged").not().isEmpty(),
     check("title", "You must enter a title").not().isEmpty(),
+  ],
+  login: [
+    check("email", "You must enter a valid email").not().isEmpty(),
+    check("password", "You must enter your password").not().isEmpty(),
   ]
 }
 

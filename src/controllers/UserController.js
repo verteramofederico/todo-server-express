@@ -61,5 +61,32 @@ module.exports = {
                 return res.status(201).json({ token });
             }
         )
+    },
+    async login(req, res) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+        return res.status(400).json({ errores: errors.array() });
+        }
+    
+        const { email, password } = req.body;
+    
+        let user = await User.findOne({ where: { email } });
+        if (!user) return res.status(400).send({ message: "User not founded" });
+    
+        const verifyPass = await bcryptjs.compare(password, user.password);
+        if (!verifyPass)
+        return res.status(400).send({ message: "Incorrect password or email" });
+    
+        //JWT
+        const payload = { id: user.id, email: user.email };
+        jwt.sign(
+            payload,
+            process.env.SIGNATURE_TOKEN,
+            { expiresIn: 86400 },
+            (error, token) => {
+                if (error) throw error;
+                return res.status(201).json({ token });
+            }
+        )
     }
 }

@@ -12,6 +12,7 @@ const Validations = require('../middleware/validations')
 // User Routes
 routes.get('/users/:id', authMiddleware ,UserController.show)
 routes.post('/users', Validations.createUser ,UserController.store)
+routes.post('/users/login', Validations.login ,UserController.login)
 // Todo Routes
 routes.get('/todo/:id', authMiddleware, TodoController.findOne)
 routes.get('/todo', authMiddleware , TodoController.showAll)
