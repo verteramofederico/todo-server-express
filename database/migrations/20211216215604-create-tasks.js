@@ -21,9 +21,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      isCompleted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      completed: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       created_at: {
         type: Sequelize.DATE,

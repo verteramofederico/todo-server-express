@@ -21,7 +21,7 @@ module.exports = {
     
         if (!user) {return res.status(404).send({message: 'can not find the user'})}
 
-        return res.json(user)
+        return res.status(200).json(user)
     },
     async store(req, res) {
         const {name, email, password} = req.body
@@ -58,7 +58,7 @@ module.exports = {
             { expiresIn: 86400 },
             (error, token) => {
                 if (error) {throw error};
-                return res.json({ token });
+                return res.status(201).json({ token });
             }
         )
     }
