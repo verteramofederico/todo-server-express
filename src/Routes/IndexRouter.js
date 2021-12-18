@@ -18,7 +18,7 @@ routes.get('/todo/:id', authMiddleware, TodoController.findOne)
 routes.get('/todo', authMiddleware , TodoController.showAll)
 routes.get('/usertodo', authMiddleware , TodoController.showUserTasks)
 routes.post('/todo', authMiddleware, Validations.createTask,  TodoController.store)
-routes.put('/todo/:id', authMiddleware, TodoController.modify)
-routes.delete('/todo/:id', authMiddleware, TodoController.delete)  
+routes.put('/todo', authMiddleware, TodoController.modify)
+routes.delete('/todo', authMiddleware, TodoController.delete)  
 
 module.exports = routes

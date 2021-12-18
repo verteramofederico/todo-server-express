@@ -45,9 +45,9 @@ module.exports = {
         return res.status(201).json(task)
     },
     async modify (req, res) {
-        const {user_id} = req.body
+        const {id} = req.body
 
-        const taskToModify = await Task.findOne({ where: { user_id: user_id  }})
+        const taskToModify = await Task.findOne({ where: { id: id  }})
         taskToModify.completed === 0 ? taskToModify.completed = 1 : taskToModify.completed = 0
         await taskToModify.save()
 
@@ -55,9 +55,9 @@ module.exports = {
 
     },
     async delete (req, res) {
-        const {id} = req.params
+        const {id} = req.body
 
-        const taskToDelete = await Task.destroy({ where: { id }})
+        const taskToDelete = await Task.destroy({ where: { id: id }})
         return res.status(204).json(taskToDelete)
         
     }
