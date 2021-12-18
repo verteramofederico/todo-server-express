@@ -45,9 +45,9 @@ module.exports = {
         return res.status(201).json(task)
     },
     async modify (req, res) {
-        const {id} = req.params
+        const {user_id} = req.body
 
-        const taskToModify = await Task.findOne({ where: { id }})
+        const taskToModify = await Task.findOne({ where: { user_id: user_id  }})
         taskToModify.completed === 0 ? taskToModify.completed = 1 : taskToModify.completed = 0
         await taskToModify.save()
 
