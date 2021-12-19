@@ -1,9 +1,9 @@
-const Sequelize = require("sequelize");
-const { validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken");
+const Sequelize = require('sequelize')
+const { validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
 
 // To hast password
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs')
 
 const db = require('../../database/models')
 
@@ -15,7 +15,7 @@ module.exports = {
 
         const user = await User.findOne({ where: { id },
             attributes: {
-                exclude: ["password", "updatedAt"]
+                exclude: ['password', 'updatedAt']
                 }
             })
     
@@ -26,9 +26,9 @@ module.exports = {
     async store(req, res) {
         const {name, email, password} = req.body
 
-        const errors = validationResult(req);
+        const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ errors: errors.array() })
         }
 
         let user = await User.findOne({
@@ -37,11 +37,11 @@ module.exports = {
 
         if (user) {
             if (user.email === email)
-                return res.status(400).json({ message: "Email already registered" });
+                return res.status(400).json({ message: 'Email already registered' })
         }
 
         // hash passwordHash
-        const salt = await bcryptjs.genSalt(10);
+        const salt = await bcryptjs.genSalt(10)
         const passwordHashed = await bcryptjs.hash(password, salt)
         
         user = await User.create({
@@ -51,41 +51,41 @@ module.exports = {
         })
 
         // jwt
-        const payload = { id: user.id, email: user.email };
+        const payload = { id: user.id, email: user.email }
         jwt.sign(
             payload,
             process.env.SIGNATURE_TOKEN,
             { expiresIn: 86400 },
             (error, token) => {
                 if (error) {throw error};
-                return res.status(201).json({ token, name: user.name, id: user.id });
+                return res.status(201).json({ token, name: user.name, id: user.id })
             }
         )
     },
     async login(req, res) {
-        const errors = validationResult(req);
+        const errors = validationResult(req)
         if (!errors.isEmpty()) {
-        return res.status(400).json({ errores: errors.array() });
+        return res.status(400).json({ errores: errors.array() })
         }
     
-        const { email, password } = req.body;
+        const { email, password } = req.body
     
-        let user = await User.findOne({ where: { email } });
-        if (!user) return res.status(400).send({ message: "User not founded" });
+        let user = await User.findOne({ where: { email } })
+        if (!user) return res.status(400).send({ message: 'User not founded' })
     
-        const verifyPass = await bcryptjs.compare(password, user.password);
+        const verifyPass = await bcryptjs.compare(password, user.password)
         if (!verifyPass)
-        return res.status(400).send({ message: "Incorrect password or email" });
+        return res.status(400).send({ message: 'Incorrect password or email' })
     
         //JWT
-        const payload = { id: user.id, email: user.email };
+        const payload = { id: user.id, email: user.email }
         jwt.sign(
             payload,
             process.env.SIGNATURE_TOKEN,
             { expiresIn: 86400 },
             (error, token) => {
-                if (error) throw error;
-                return res.status(201).json({ token, name: user.name, id: user.id });
+                if (error) throw error
+                return res.status(201).json({ token, name: user.name, id: user.id })
             }
         )
     }

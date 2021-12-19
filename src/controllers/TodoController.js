@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize");
-const { validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken");
+const Sequelize = require('sequelize')
+const { validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
 
 const db = require('../../database/models')
 
@@ -32,9 +32,9 @@ module.exports = {
     async store (req, res) {
         const {user_id, title} = req.body
 
-        const errors = validationResult(req);
+        const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ errors: errors.array() })
         }
         
         const task = await Task.create({
