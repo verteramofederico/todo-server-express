@@ -1,5 +1,7 @@
 # SERVER - Node back express
 
+https://www.loom.com/share/14547c478fc245b5b15806d7bb99f292
+
 Tu run:
 create .env and complete with your configuration
 
